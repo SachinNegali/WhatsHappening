@@ -10,15 +10,27 @@ export const getUsers = async (req, res) => {
 }
 
 
-export const addUser = async (req, res) => {
-    try {
-        const { name, displayName, loggedInWith } = req.body;
-        const newUserObj = {
-            name,
-            displayName,
-            loggedInWith,
-        }
-    } catch (error) {
+// export const addUser = async (req, res) => {
+//     try {
+//         const { name, displayName, loggedInWith } = req.body;
+//         const newUserObj = {
+//             name,
+//             displayName,
+//             loggedInWith,
+//         }
+//     } catch (error) {
 
-    }
-}
+//     }
+// }
+
+export const createUser = (req,res) => {
+    const user = new User(req.body);
+    user.save((err,user) => {
+        if(err) {
+            return res.status(400).json({
+                error: "Not able to save user in DB"
+            });
+        }
+        res.json({user});
+    });
+};
