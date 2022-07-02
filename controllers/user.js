@@ -1,4 +1,5 @@
 import User from "../models/user";
+import jwt from "jsonwebtoken";
 
 export const getUsers = async (req, res) => {
     try {
@@ -16,8 +17,10 @@ export const addUser = async (req, res) => {
         const newUserObj = {
             name,
             displayName,
-            loggedInWith,
+            // loggedInWith,
         }
+        const jwtSecret = process.env.JWT_ACCESS_TOKEN_SECRET;
+        const token = jwt.sign({ ...userInfo, userType: "user" }, jwtSecret);
     } catch (error) {
 
     }
